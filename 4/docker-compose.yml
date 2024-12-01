@@ -5,18 +5,20 @@ services:
     image: traefik:v2.10
     container_name: traefik
     ports:
-      - "80:80"    
-      - "8080:8080"
+      - "80:80"      
+      - "8080:8080"  
     command:
-      - "--api.insecure=true"                 
-      - "--providers.docker=true"             
-      - "--entrypoints.web.address=:80"       
+      - "--api.insecure=true"               
+      - "--providers.docker=true"           
+      - "--entrypoints.web.address=:80"     
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro" 
 
-  whoami:
-    image: "traefik/whoami" 
-    container_name: "whoami"
+  backend:
+    image: traefik/whoami
+    deploy:
+      replicas: 3
     labels:
-      - "traefik.enable=true"                 
-      - "traefik.http.routers.whoami.rule=Host(`localhost`)" 
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`localhost`)"
+      - "traefik.http.services.backend.loadbalancer.server.port=80"
