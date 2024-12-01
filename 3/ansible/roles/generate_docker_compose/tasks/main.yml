@@ -1,0 +1,12 @@
+
+- name: Generate docker-compose.yml from template
+  template:
+    src: docker-compose.yml.j2
+    dest: /mnt/c/Users/User/Documents/GitHub/ACS/3/ansible/playbook/docker-compose.yml
+  become: yes
+
+- name: Start containers using docker-compose
+  community.docker.docker_compose:
+    project_src: /mnt/c/Users/User/Documents/GitHub/ACS/3/ansible/playbook
+    restarted: yes
+  become: yes
