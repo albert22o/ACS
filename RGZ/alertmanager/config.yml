@@ -1,0 +1,12 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: "telegram"
+
+receivers:
+  - name: "telegram"
+    telegram_configs:
+      - bot_token: "7925844704:AAHS-rkKcWLfxfSbEKHgrsvu_YS5qzuhDsw"
+        chat_id: "<855492238>"
+        message: '{{ template "telegram.default.message" . }}'
